@@ -1,5 +1,4 @@
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
-import name.remal.gradle_plugins.sonarlint.SonarLintExtension
 import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 
@@ -34,7 +33,6 @@ allprojects {
     val testcontainersBom: String by project
     val protobufBom: String by project
     val guava: String by project
-    val jmh: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -45,8 +43,6 @@ allprojects {
                 mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("com.google.guava:guava:$guava")
-            dependency("org.openjdk.jmh:jmh-core:$jmh")
-            dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
         }
     }
 
@@ -59,14 +55,11 @@ allprojects {
             force("commons-lang:commons-lang:2.5")
             force("org.codehaus.jackson:jackson-core-asl:1.8.8")
             force("org.codehaus.jackson:jackson-mapper-asl:1.8.8")
-            force("org.sonarsource.analyzer-commons:sonar-analyzer-commons:2.8.0.2699")
-            force("org.sonarsource.analyzer-commons:sonar-xml-parsing:2.8.0.2699")
-            force("org.sonarsource.sslr:sslr-core:1.24.0.633")
-            force("org.sonarsource.analyzer-commons:sonar-analyzer-recognizers:2.8.0.2699")
-            force("com.google.code.findbugs:jsr305:3.0.2")
-            force("commons-io:commons-io:2.15.1")
-            force("com.google.errorprone:error_prone_annotations:2.26.1")
-            force("com.google.j2objc:j2objc-annotations:3.0.0")
+            force("commons-io:commons-io:2.16.1")
+            force("org.eclipse.jgit:org.eclipse.jgit:6.9.0.202403050737-r")
+            force("org.apache.commons:commons-compress:1.26.1")
+            force("com.google.errorprone:error_prone_annotations:2.36.0")
+            force("org.jetbrains:annotations:19.0.0")
         }
     }
 }
@@ -74,20 +67,21 @@ allprojects {
 subprojects {
     plugins.apply(JavaPlugin::class.java)
     extensions.configure<JavaPluginExtension> {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing"))
+
     }
 
 
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java {
-            palantirJavaFormat("2.38.0")
+            palantirJavaFormat("2.39.0")
         }
     }
 
