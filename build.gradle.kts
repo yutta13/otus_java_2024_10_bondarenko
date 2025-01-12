@@ -105,15 +105,3 @@ subprojects {
         }
     }
 }
-
-tasks {
-    val managedVersions by registering {
-        doLast {
-            project.extensions.getByType<DependencyManagementExtension>()
-                .managedVersions
-                .toSortedMap()
-                .map { "${it.key}:${it.value}" }
-                .forEach(::println)
-        }
-    }
-}
