@@ -23,3 +23,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+include("L03-generics")
