@@ -1,4 +1,5 @@
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
+import name.remal.gradle_plugins.sonarlint.SonarLintExtension
 import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 
@@ -33,6 +34,7 @@ allprojects {
     val testcontainersBom: String by project
     val protobufBom: String by project
     val guava: String by project
+    val jmh: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -75,8 +77,16 @@ subprojects {
         options.encoding = "UTF-8"
         options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing"))
 
+        dependsOn("spotlessApply")
     }
 
+    apply<name.remal.gradle_plugins.sonarlint.SonarLintPlugin>()
+    configure<SonarLintExtension> {
+        nodeJs {
+            detectNodeJs = false
+            logNodeJsNotFound = false
+        }
+    }
 
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
