@@ -29,3 +29,7 @@ include("L05-collections")
 include("L06-annotations")
 include("HW06-annotations")
 include("L-08-gc")
+include("L-08-gc:demo")
+findProject(":L-08-gc:demo")?.name = "demo"
+include("L-08-gc:homework")
+findProject(":L-08-gc:homework")?.name = "homework"
