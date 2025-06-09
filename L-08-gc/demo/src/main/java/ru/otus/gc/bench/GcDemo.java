@@ -89,7 +89,7 @@ public class GcDemo {
     }
 
     private static void switchOnMonitoring() {
-        var gcbeans = java.lang.management.ManagementFactory.getGarbageCollectorMXBeans();
+        var gcbeans = ManagementFactory.getGarbageCollectorMXBeans();
         for (var gcbean : gcbeans) {
             logger.info("GC name:{}", gcbean.getName());
             var emitter = (NotificationEmitter) gcbean;

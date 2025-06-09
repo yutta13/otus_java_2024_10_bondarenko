@@ -33,3 +33,6 @@ include("L-08-gc:demo")
 findProject(":L-08-gc:demo")?.name = "demo"
 include("L-08-gc:homework")
 findProject(":L-08-gc:homework")?.name = "homework"
+include("L-08-gc:L-10-bytecode")
+findProject(":L-08-gc:L-10-bytecode")?.name = "L-10-bytecode"
+include("L-10-bytecode")
